@@ -3,6 +3,8 @@
 #define MAX 1000
 using namespace std;
 
+void Hangup();
+
 //联系人结构体
 struct Person
 {
@@ -93,8 +95,7 @@ void addPerson(Addressbooks *abs)
         abs->m_Size++;
         cout<<"添加成功"<<endl;
 
-        system("read -rsp $'点击回车继续\n' "); //请按任意键继续
-        system("clear"); //清屏操作
+        Hangup();
     }
 }
 
@@ -117,8 +118,7 @@ void showPerson(Addressbooks *abs)
             cout<<"住址："<<abs->personArray[i].m_Addr<<endl;
         }
     }
-    system("read -rsp $'点击回车继续\n' "); //请按任意键继续
-    system("clear"); //清屏操作   
+    Hangup(); 
 }
 
 //监测联系人是否存在
@@ -156,8 +156,7 @@ void deletePerson(Addressbooks *abs)
     {
         cout<<"查无此人"<<endl;
     }
-    system("read -rsp $'点击回车继续\n' "); //请按任意键继续
-    system("clear"); //清屏操作
+    Hangup();
 }
 
 
@@ -183,8 +182,7 @@ void findPerson(Addressbooks *abs)
     {
         cout<<"查无此人"<<endl;
     }
-    system("read -rsp $'点击回车继续\n' "); //请按任意键继续
-    system("clear"); //清屏操作
+    Hangup();
 }
 
 //修改指定联系人信息
@@ -249,18 +247,34 @@ void modifyPerson(Addressbooks *abs)
     {
         cout<<"查无此人"<<endl;
     }
-    system("read -rsp $'点击回车继续\n' "); //请按任意键继续
-    system("clear"); //清屏操作
-}
+    
+    Hangup();
 
+}
 
 void cleanPerson(Addressbooks *abs)
 {
     abs->m_Size = 0;
     cout<<"通讯录已清空"<<endl;
-    system("read -rsp $'点击回车继续\n' "); //请按任意键继续
-    system("clear"); //清屏操作
+    Hangup();
 }
+
+void Hangup() {
+    #ifdef _WIN32 //define something for Windows (32-bit and 64-bit, this part is common)
+    system("pause"); //请按任意键继续
+    system("cls"); //清屏操作    
+#endif
+
+#ifdef _WIN64 //define something for Windows (64-bit only)
+    system("pause"); //请按任意键继续
+    system("cls"); //清屏操作    
+#endif
+#ifdef __APPLE__
+    system("read -rsp $'点击回车继续\n' "); //请按任意键继续
+    system("clear"); //清屏操作    
+#endif
+}
+
 
 int main()
 {
@@ -308,8 +322,6 @@ int main()
                 break;
         }
     }
-    
-
-    
+       
     return 0;
 }
